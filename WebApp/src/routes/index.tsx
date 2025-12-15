@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import {
+  DashBoard,
   Login,
   NotFound,
   PasswordReset,
-  Profile,
   Reports,
   Resources,
   UnauthorizedAccess,
@@ -12,6 +12,7 @@ import {
 } from '../pages';
 import { PermissionsMap } from '../permissions/PermissionsMap';
 import { CleanLayout, DefaultLayout } from '../layouts';
+import { SystemResourcesProvider, UsersProvider } from '../contexts';
 
 const publicRoutes = [
   { path: '/login', element: <Login /> },
@@ -19,20 +20,37 @@ const publicRoutes = [
 ];
 
 const privateRoutes = [
-  { path: '/profile', element: <Profile /> },
+  {
+    path: '/dashboard',
+    element: <DashBoard />,
+  },
   {
     path: '/users',
-    element: <Users />,
+    element: (
+      <SystemResourcesProvider>
+        <UsersProvider>
+          <Users />
+        </UsersProvider>
+      </SystemResourcesProvider>
+    ),
     requiredPermission: PermissionsMap.USERS,
   },
   {
     path: '/resources',
-    element: <Resources />,
+    element: (
+      <SystemResourcesProvider>
+        <Resources />
+      </SystemResourcesProvider>
+    ),
     requiredPermission: PermissionsMap.RESOURCES,
   },
   {
     path: '/reports',
-    element: <Reports />,
+    element: (
+      <UsersProvider>
+        <Reports />
+      </UsersProvider>
+    ),
     requiredPermission: PermissionsMap.REPORTS,
   },
 ];
