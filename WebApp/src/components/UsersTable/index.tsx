@@ -17,6 +17,7 @@ import { Edit, Delete, Search } from '@mui/icons-material';
 
 import type { UserRead } from '../../interfaces';
 import { useUsers } from '../../hooks';
+import NoResultsFound from '../NoResultsFound';
 
 interface UsersTableProps {
   onEdit: (user: UserRead) => void;
@@ -85,7 +86,9 @@ export default function UsersTable({ onEdit, onDelete }: UsersTableProps) {
               <TableCell>Nome completo</TableCell>
               <TableCell>Criado em</TableCell>
               <TableCell>Atualizado em</TableCell>
-              <TableCell align="right">Ações</TableCell>
+              <TableCell sx={{ minWidth: 112 }} align="center">
+                Ações
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -108,7 +111,7 @@ export default function UsersTable({ onEdit, onDelete }: UsersTableProps) {
                   <TableCell>
                     {new Date(user.updatedAt).toLocaleString()}
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell sx={{ minWidth: 112 }} align="center">
                     <IconButton
                       color="primary"
                       onClick={() => onEdit(user)}
@@ -129,7 +132,7 @@ export default function UsersTable({ onEdit, onDelete }: UsersTableProps) {
             ) : (
               <TableRow>
                 <TableCell colSpan={7} align="center">
-                  Nenhum usuário encontrado
+                  <NoResultsFound entity="usuário" />
                 </TableCell>
               </TableRow>
             )}

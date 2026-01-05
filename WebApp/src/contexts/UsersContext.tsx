@@ -4,6 +4,7 @@ import {
   useEffect,
   useCallback,
   type ReactNode,
+  useMemo,
 } from 'react';
 
 import type {
@@ -20,15 +21,20 @@ import {
   listUserById,
 } from '../services';
 import { cleanStates, getErrorMessage } from '../helpers';
+import { useAuth } from '../hooks';
+import { isRootUser } from '../permissions/Rules';
 
 const UsersContext = createContext<UsersContextProps | undefined>(undefined);
 export default UsersContext;
 
 export function UsersProvider({ children }: { children: ReactNode }) {
+  const { authUser } = useAuth();
   const [users, setUsers] = useState<UserRead[]>([]);
   const [pagination, setPagination] = useState(cleanStates.tablePagination);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const showRootUsers = authUser ? isRootUser(authUser) : false;
 
   const fetchUsers = useCallback(
     async (
@@ -41,7 +47,6 @@ export function UsersProvider({ children }: { children: ReactNode }) {
 
       try {
         const response = await listUsers(page, pageSize, searchKey);
-
         setUsers(response.data);
         setPagination({
           totalItems: response.totalItems,
@@ -58,6 +63,14 @@ export function UsersProvider({ children }: { children: ReactNode }) {
     },
     [pagination.page, pagination.pageSize]
   );
+
+  const visibleUsers = useMemo(() => {
+    if (showRootUsers) return users;
+
+    return users.filter((user) => {
+      return !isRootUser(user);
+    });
+  }, [users, showRootUsers]);
 
   const addUser = useCallback(async (user: UserFormValues) => {
     setLoading(true);
@@ -111,7 +124,7 @@ export function UsersProvider({ children }: { children: ReactNode }) {
   return (
     <UsersContext.Provider
       value={{
-        users,
+        users: visibleUsers,
         pagination,
         loading,
         error,
