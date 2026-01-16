@@ -1,3 +1,10 @@
+# [1.0.0-dev.2](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2026-01-16)
+
+
+### Bug Fixes
+
+* Ajusta o nome da env ([34f6ee5](https://github.com/TheRermz/admin-panel-boilerplate/commit/34f6ee5ce3726caba39da53d3d777eb78a0be7a8))
+
 # 1.0.0-dev.1 (2026-01-16)
 
 
