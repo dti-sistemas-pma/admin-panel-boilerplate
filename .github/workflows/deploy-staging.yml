@@ -1,42 +1,20 @@
-name: Deploy app Staging
+name: CD - Deploy to Staging
 
 on:
-  workflow_run:
-    workflows: ["Test app"]
-    types: ["completed"]
+  # Isso só roda APÓS você fazer merge do PR (não durante o PR)
+  push:
+    branches: [staging]
 
 env:
-  DOCKER_IMAGE: therermz/admin-boiler-plate # ALTERE COM O NOME DA nome-dockerhub/APLICAÇÃO
+  DOCKER_IMAGE: therermz/admin-boiler-plate
   APP_NAME: app-name
 
 jobs:
   deploy:
-    if: |
-      github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'staging'
-
     runs-on: ubuntu-latest
-    environment: staging_environment
-
+    environment: staging
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Login DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: ${{ env.DIR }}
-          push: true
-          tags: |
-            ${{ env.DOCKER_IMAGE }}:staging
-            ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-
-      - name: Deploy to Server
+      - name: Deploy to Staging
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.STAGING_SERVER_HOST }}
@@ -45,6 +23,7 @@ jobs:
           port: ${{ secrets.STAGING_SERVER_SSH_PORT }}
           script: |
             cd ~/repos/${{ env.APP_NAME }}
-            docker-compose -f ${env.APP_NAME}.staging.yml pull
-            docker-compose -f ${{env.APP_NAME}}.staging.yml -p ${{ env.APP_NAME }} up -d
+            docker pull ${{ env.DOCKER_IMAGE }}:staging
+            docker-compose -f docker-compose.staging.yml pull
+            docker-compose -f docker-compose.staging.yml up -d
             docker image prune -f
