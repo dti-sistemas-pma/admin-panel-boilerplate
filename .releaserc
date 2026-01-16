@@ -11,7 +11,8 @@
       "tagFormat": "staging-${version}"
     },
     {
-      "name": "main"
+      "name": "main",
+      "tagFormat": "${version}"
     }
   ],
   "plugins": [
