@@ -3,8 +3,6 @@ name: CI - Build and Test
 on:
   push:
     branches: [main, staging, development]  # Quando faz merge (ou push em dev)
-  pull_request:
-    branches: [main, staging]  # Quando abre PR
 
 env:
   DOCKER_IMAGE: therermz/admin-boiler-plate
