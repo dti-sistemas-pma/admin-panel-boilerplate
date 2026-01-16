@@ -1,3 +1,10 @@
+# [1.0.0-dev.5](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2026-01-16)
+
+
+### Features
+
+* **docker:** adiciona o environment no ambiente de staging ([2e84218](https://github.com/TheRermz/admin-panel-boilerplate/commit/2e8421804128183d13bc27dd94c1d556a1c0b72b))
+
 # [1.0.0-dev.4](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2026-01-16)
 
 
