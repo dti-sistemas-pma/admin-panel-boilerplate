@@ -2,11 +2,13 @@
   "branches": [
     {
       "name": "development",
-      "prerelease": "dev"
+      "prerelease": "dev",
+      "tagFormat": "dev-${version}"
     },
     {
       "name": "staging",
-      "prerelease": "staging"
+      "prerelease": "staging",
+      "tagFormat": "staging-${version}"
     },
     {
       "name": "main"

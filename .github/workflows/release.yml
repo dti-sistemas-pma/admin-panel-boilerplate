@@ -20,7 +20,7 @@ jobs:
           node-version: '24.13.0'
 
       - name: Install Dependencies
-        run: npm install semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github
+        run: npm install
 
       - name: Run Semantic Release
         run: npx semantic-release
