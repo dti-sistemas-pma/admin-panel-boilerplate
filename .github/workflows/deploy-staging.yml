@@ -6,7 +6,7 @@ on:
     types: ["completed"]
 
 env:
-  DOCKER_IMAGE: gabidti/app-name # ALTERE COM O NOME DA APLICAÇÃO
+  DOCKER_IMAGE: therermz/admin-boiler-plate # ALTERE COM O NOME DA nome-dockerhub/APLICAÇÃO
   APP_NAME: app-name
 
 jobs:
