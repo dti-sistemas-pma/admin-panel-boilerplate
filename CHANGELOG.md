@@ -1,3 +1,10 @@
+# [1.0.0-dev.6](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2026-01-16)
+
+
+### Bug Fixes
+
+* **ci:** Remove a branch de development do CI - Build, Test and Deploy ([bb20203](https://github.com/TheRermz/admin-panel-boilerplate/commit/bb20203e1b7edcc781d0e43bad3d5044c02ed682))
+
 # [1.0.0-dev.5](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2026-01-16)
 
 
