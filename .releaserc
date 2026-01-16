@@ -17,12 +17,6 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/github",
-    "@semantic-release/git",
-    [
-      "@semantic-release/exec",
-      {
-        "publishCmd": "if [ \"${nextRelease.channel}\" = \"dev\" ]; then TAG=\"dev-${nextRelease.version}\"; elif [ \"${nextRelease.channel}\" = \"staging\" ]; then TAG=\"staging-${nextRelease.version}\"; else TAG=\"${nextRelease.version}\"; fi && git tag -a \"$TAG\" -m \"Release ${nextRelease.version}\" && git push origin \"$TAG\""
-      }
-    ]
+    "@semantic-release/git"
   ]
 }
