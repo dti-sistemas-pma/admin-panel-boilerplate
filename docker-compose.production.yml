@@ -1,0 +1,24 @@
+services:
+  api:
+    build:
+      context: ./Api
+      dockerfile: Dockerfile
+    container_name: admin-panel-api
+    env_file:
+      - ./Api/.env
+    ports:
+      - '5209:5209'
+    restart: unless-stopped
+    stop_grace_period: 10s
+    security_opt:
+      - apparmor=unconfined
+    networks:
+      - admin-panel-network
+    volumes:
+      - ./Api:/app
+      - /app/obj      # Evita conflito com build local
+      - /app/bin      # Evita conflito com build local
+
+networks:
+  admin-panel-network:
+    driver: bridge
