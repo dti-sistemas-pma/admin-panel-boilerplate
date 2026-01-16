@@ -2,17 +2,14 @@
   "branches": [
     {
       "name": "development",
-      "prerelease": "dev",
-      "tagFormat": "dev-${version}"
+      "prerelease": "dev"
     },
     {
       "name": "staging",
-      "prerelease": "staging",
-      "tagFormat": "staging-${version}"
+      "prerelease": "staging"
     },
     {
-      "name": "main",
-      "tagFormat": "${version}"
+      "name": "main"
     }
   ],
   "plugins": [
@@ -20,6 +17,12 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/github",
-    "@semantic-release/git"
+    "@semantic-release/git",
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "if [ \"${nextRelease.channel}\" = \"dev\" ]; then TAG=\"dev-${nextRelease.version}\"; elif [ \"${nextRelease.channel}\" = \"staging\" ]; then TAG=\"staging-${nextRelease.version}\"; else TAG=\"${nextRelease.version}\"; fi && git tag -a \"$TAG\" -m \"Release ${nextRelease.version}\" && git push origin \"$TAG\""
+      }
+    ]
   ]
 }
