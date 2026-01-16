@@ -1,3 +1,10 @@
+# [1.0.0-dev.4](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2026-01-16)
+
+
+### Features
+
+* **docker:** padroniza imagem, portas e comunicação entre serviços ([b0df12e](https://github.com/TheRermz/admin-panel-boilerplate/commit/b0df12e4282eb2b392f6730ad36049230a189599))
+
 # [1.0.0-dev.3](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2026-01-16)
 
 
