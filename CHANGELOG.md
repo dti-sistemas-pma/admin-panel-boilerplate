@@ -1,3 +1,16 @@
+# [1.0.0-dev.3](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2026-01-16)
+
+
+### Bug Fixes
+
+* Ajusta o semantic-release para fazer os nomes dos labels a sua forma, já que customização está meio dificil.TODO: desenvolver uma forma de fazer as labels como branch-x.y.z ([18cf737](https://github.com/TheRermz/admin-panel-boilerplate/commit/18cf737936f59d815afd6cba492aa7a0d7908352))
+* ajusta um erro do tagformat ([877e868](https://github.com/TheRermz/admin-panel-boilerplate/commit/877e86864c776c836329cb840bfaa999dd931df2))
+
+
+### Features
+
+* Ajusta os nomes das labels para seguir o padrão dev|staging-x.y.z ([b9da8a5](https://github.com/TheRermz/admin-panel-boilerplate/commit/b9da8a5e6613c7b62f1b88ae33b7001b9626851c))
+
 # [1.0.0-dev.2](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2026-01-16)
 
 
