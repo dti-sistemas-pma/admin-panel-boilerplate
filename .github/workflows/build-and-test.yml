@@ -2,7 +2,7 @@ name: CI - Build, Test and Deploy
 
 on:
   push:
-    branches: [main, staging, development]
+    branches: [main, staging]
   workflow_dispatch:
 
 
