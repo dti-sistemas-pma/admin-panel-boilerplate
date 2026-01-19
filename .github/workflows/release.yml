@@ -1,8 +1,10 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
-    branches: ["main", "staging", "development"]
+    branches: [development/murilo/semantic-release]
+
 
 permissions:
   contents: write
