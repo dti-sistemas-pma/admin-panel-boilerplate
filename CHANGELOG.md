@@ -1,3 +1,11 @@
+# [1.0.0-staging.2](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-staging.1...v1.0.0-staging.2) (2026-01-19)
+
+
+### Bug Fixes
+
+* **ci:** Ajusta a versão do upload-artifact para v6 ([b225c95](https://github.com/TheRermz/admin-panel-boilerplate/commit/b225c95f9a47d1f98eb796f0356cf037b91f1a50))
+* **ci:** Remove a branch de development do CI - Build, Test and Deploy ([bb20203](https://github.com/TheRermz/admin-panel-boilerplate/commit/bb20203e1b7edcc781d0e43bad3d5044c02ed682))
+
 # [1.0.0-dev.6](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2026-01-16)
 # 1.0.0-staging.1 (2026-01-16)
 
