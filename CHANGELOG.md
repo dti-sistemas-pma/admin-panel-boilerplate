@@ -1,8 +1,10 @@
+# [1.0.0-dev.6](https://github.com/TheRermz/admin-panel-boilerplate/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2026-01-16)
 # 1.0.0-staging.1 (2026-01-16)
 
 
 ### Bug Fixes
 
+* **ci:** Remove a branch de development do CI - Build, Test and Deploy ([bb20203](https://github.com/TheRermz/admin-panel-boilerplate/commit/bb20203e1b7edcc781d0e43bad3d5044c02ed682))
 * **Active prop:** ajuste de retorno ([570a847](https://github.com/TheRermz/admin-panel-boilerplate/commit/570a847649f77e43ded90d35c4688fde80ffa87e))
 * adjust login interceptor ([0355bac](https://github.com/TheRermz/admin-panel-boilerplate/commit/0355bac4071aa480b760e992f068a558d63c4e5d))
 * adjust providers scopes ([83ef2be](https://github.com/TheRermz/admin-panel-boilerplate/commit/83ef2bee7890e9a189cf1155b1037a1e2936cf0e))
