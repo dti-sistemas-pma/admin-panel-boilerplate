@@ -291,6 +291,17 @@ release:
 
 #### Job 4: Push to Docker
 
+**IMPORTANTE** -- é necessário criar o repositório no _DockerHub_.
+
+1. Acesse: [https://hub.docker.com](Docker Hub).
+2. Acesse a sua conta.
+3. Clique em `My Hub`.
+4. Vá em Repositories.
+5. Clique em Create a Repository.
+6. Dê o nome da aplicação -- Ex. app-velorio -- Adicione uma descrição breve.
+7. Deixe em Público.
+8. Clique em Create.
+
 ```yaml
 push-to-docker:
   runs-on: ubuntu-latest
@@ -513,8 +524,8 @@ O Semantic Release usa [Conventional Commits](https://www.conventionalcommits.or
 
 ### Imagem
 
-- **Repositório:** `therermz/admin-boiler-plate`
-- **URL:** https://hub.docker.com/r/therermz/admin-boiler-plate
+- **Repositório:** `docker-username/docker-repo-name`
+- **URL:** https://hub.docker.com/r/docker-username/docker-repo-name
 
 ### Tags Disponíveis
 
@@ -606,7 +617,9 @@ O servidor precisa ter um webhook listener (como [webhook](https://github.com/ad
 Com o listener funcionando, é necessário um script para rodar o deploy, segue o exemplo de deploy.sh
 
 ```bash
-# Exemplo de configuração webhook
+# Exemplo de configuração webhook no ambiente de produção
+# Para abiente de staging, altere p $ENV == "main" para $ENV == "staging"
+# E troque o nome do docker-compose.production.yml pull para docker-compose.staging.yml
 #!/usr/bin/env bash
 set -e
 
@@ -630,8 +643,8 @@ fi
 cd "$APP_DIR"
 
 if [[ "$ENV" == "main" ]]; then
-  docker compose -f docker-compose.staging.yml pull
-  docker compose -f docker-compose.staging.yml -p $APP_NAME  up -d
+  docker compose -f docker-compose.production.yml pull
+  docker compose -f docker-compose.production.yml -p $APP_NAME  up -d
 else
   echo "Ambiente inválido"
   exit 1
@@ -661,7 +674,7 @@ Configure os seguintes secrets no GitHub (Settings > Secrets and variables > Act
 | Secret               | Descrição                              | Exemplo            |
 | -------------------- | -------------------------------------- | ------------------ |
 | `TOKEN_GITHUB`       | Token GitHub com permissões de escrita | `ghp_xxxxxxxxxxxx` |
-| `DOCKERHUB_USERNAME` | Usuário do Docker Hub                  | `therermz`         |
+| `DOCKERHUB_USERNAME` | Usuário do Docker Hub                  | `docker-username`  |
 | `DOCKERHUB_TOKEN`    | Token de acesso do Docker Hub          | `dckr_pat_xxxxx`   |
 
 ### Para Deploy de Staging
