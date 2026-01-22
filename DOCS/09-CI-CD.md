@@ -293,7 +293,7 @@ release:
 
 **IMPORTANTE** -- é necessário criar o repositório no _DockerHub_.
 
-1. Acesse: [https://hub.docker.com](Docker Hub).
+1. Acesse: [Docker Hub](https://hub.docker.com).
 2. Acesse a sua conta.
 3. Clique em `My Hub`.
 4. Vá em Repositories.
