@@ -5,7 +5,7 @@ Referência completa de todos os endpoints da API REST.
 ## Base URL
 
 ```
-http://localhost:5209/api
+http://localhost:{PORT}/api
 ```
 
 ## Autenticação
@@ -27,14 +27,16 @@ Exceção: Endpoints em `/api/auth/*` não requerem autenticação.
 Autenticação com credenciais locais.
 
 **Request:**
+
 ```json
 {
-  "identifier": "root",          // Email ou username
+  "identifier": "root", // Email ou username
   "password": "root1234"
 }
 ```
 
 **Response (200):**
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIs...",
@@ -59,6 +61,7 @@ Autenticação com credenciais locais.
 ```
 
 **Errors:**
+
 - `401`: Credenciais inválidas
 - `404`: Usuário não encontrado
 - `400`: Usuário inativo
@@ -70,6 +73,7 @@ Autenticação com credenciais locais.
 Autenticação via token externo (SSO).
 
 **Request:**
+
 ```json
 {
   "token": "external-jwt-token"
@@ -85,6 +89,7 @@ Autenticação via token externo (SSO).
 Solicitar redefinição de senha.
 
 **Request:**
+
 ```json
 {
   "email": "user@example.com"
@@ -92,6 +97,7 @@ Solicitar redefinição de senha.
 ```
 
 **Response (200):**
+
 ```json
 {
   "message": "Email de redefinição enviado com sucesso"
@@ -99,6 +105,7 @@ Solicitar redefinição de senha.
 ```
 
 **Errors:**
+
 - `404`: Email não encontrado
 
 ---
@@ -108,6 +115,7 @@ Solicitar redefinição de senha.
 Redefinir senha com token.
 
 **Request:**
+
 ```json
 {
   "token": "reset-token-from-email",
@@ -116,6 +124,7 @@ Redefinir senha com token.
 ```
 
 **Response (200):**
+
 ```json
 {
   "message": "Senha redefinida com sucesso"
@@ -123,6 +132,7 @@ Redefinir senha com token.
 ```
 
 **Errors:**
+
 - `400`: Token inválido ou expirado
 - `400`: Senha muito curta (mínimo 6 caracteres)
 
@@ -137,16 +147,19 @@ Todos os endpoints requerem permissão `users` (ID: 2) ou `root` (ID: 1).
 Lista usuários com paginação.
 
 **Query Parameters:**
+
 - `page` (int, default: 1): Número da página
 - `limit` (int, default: 10): Itens por página
 
 **Request:**
+
 ```http
 GET /api/users?page=1&limit=10
 Authorization: Bearer {token}
 ```
 
 **Response (200):**
+
 ```json
 {
   "data": [
@@ -174,11 +187,13 @@ Authorization: Bearer {token}
 Busca usuários por texto.
 
 **Query Parameters:**
+
 - `key` (string, required): Texto de busca
 - `page` (int, default: 1)
 - `limit` (int, default: 10)
 
 **Request:**
+
 ```http
 GET /api/users/search?key=alice&page=1&limit=10
 Authorization: Bearer {token}
@@ -193,12 +208,14 @@ Authorization: Bearer {token}
 Busca usuário por ID.
 
 **Request:**
+
 ```http
 GET /api/users/1
 Authorization: Bearer {token}
 ```
 
 **Response (200):**
+
 ```json
 {
   "id": 1,
@@ -213,6 +230,7 @@ Authorization: Bearer {token}
 ```
 
 **Errors:**
+
 - `404`: Usuário não encontrado
 
 ---
@@ -222,12 +240,14 @@ Authorization: Bearer {token}
 Lista resumida de usuários para selects.
 
 **Request:**
+
 ```http
 GET /api/users/options
 Authorization: Bearer {token}
 ```
 
 **Response (200):**
+
 ```json
 [
   { "id": 1, "username": "root", "fullName": "Root User" },
@@ -242,6 +262,7 @@ Authorization: Bearer {token}
 Cria novo usuário.
 
 **Request:**
+
 ```json
 {
   "username": "john",
@@ -253,6 +274,7 @@ Cria novo usuário.
 ```
 
 **Response (201):**
+
 ```json
 {
   "id": 10,
@@ -267,6 +289,7 @@ Cria novo usuário.
 ```
 
 **Errors:**
+
 - `400`: Email já existe
 - `400`: Username já existe
 - `400`: Senha muito curta
@@ -279,11 +302,12 @@ Cria novo usuário.
 Atualiza usuário existente.
 
 **Request:**
+
 ```json
 {
   "username": "john_updated",
   "email": "john.new@example.com",
-  "password": "newpassword123",  // Opcional
+  "password": "newpassword123", // Opcional
   "fullName": "John Doe Updated",
   "permissionsIds": [2]
 }
@@ -292,6 +316,7 @@ Atualiza usuário existente.
 **Response (200):** Usuário atualizado
 
 **Errors:**
+
 - `404`: Usuário não encontrado
 - `400`: Email já existe (se alterado)
 - `400`: Username já existe (se alterado)
@@ -305,6 +330,7 @@ Atualiza usuário existente.
 Desativa usuário (soft delete).
 
 **Request:**
+
 ```http
 DELETE /api/users/10
 Authorization: Bearer {token}
@@ -313,6 +339,7 @@ Authorization: Bearer {token}
 **Response (204):** No Content
 
 **Errors:**
+
 - `404`: Usuário não encontrado
 - `400`: Não pode deletar o próprio usuário
 - `400`: Não pode deletar usuário root (ID 1)
@@ -328,10 +355,12 @@ Todos os endpoints requerem permissão `resources` (ID: 3) ou `root` (ID: 1).
 Lista recursos com paginação.
 
 **Query Parameters:**
+
 - `page` (int, default: 1)
 - `limit` (int, default: 10)
 
 **Response (200):**
+
 ```json
 {
   "data": [
@@ -357,6 +386,7 @@ Lista recursos com paginação.
 Busca recursos por texto.
 
 **Query Parameters:**
+
 - `key` (string, required)
 - `page` (int)
 - `limit` (int)
@@ -368,6 +398,7 @@ Busca recursos por texto.
 Busca recurso por ID.
 
 **Response (200):**
+
 ```json
 {
   "id": 1,
@@ -386,6 +417,7 @@ Busca recurso por ID.
 Lista resumida para selects.
 
 **Response (200):**
+
 ```json
 [
   { "id": 1, "name": "root", "exhibitionName": "Administrador" },
@@ -400,6 +432,7 @@ Lista resumida para selects.
 Cria novo recurso.
 
 **Request:**
+
 ```json
 {
   "name": "customers",
@@ -410,6 +443,7 @@ Cria novo recurso.
 **Response (201):** Recurso criado
 
 **Errors:**
+
 - `400`: Name já existe
 - `400`: Name não pode conter espaços
 
@@ -420,6 +454,7 @@ Cria novo recurso.
 Atualiza recurso.
 
 **Request:**
+
 ```json
 {
   "name": "customers_updated",
@@ -438,6 +473,7 @@ Desativa recurso (soft delete).
 **Response (204):** No Content
 
 **Errors:**
+
 - `400`: Não pode deletar recursos com permissões ativas
 
 ---
@@ -451,6 +487,7 @@ Requer permissão `reports` (ID: 4) ou `root` (ID: 1).
 Busca logs de auditoria com filtros.
 
 **Query Parameters:**
+
 - `page` (int, default: 1)
 - `limit` (int, default: 10)
 - `userId` (int, optional): Filtrar por usuário
@@ -459,12 +496,14 @@ Busca logs de auditoria com filtros.
 - `endDate` (string ISO, optional): Data final
 
 **Request:**
+
 ```http
 GET /api/reports?page=1&limit=20&userId=1&action=criado&startDate=2025-01-01&endDate=2025-01-31
 Authorization: Bearer {token}
 ```
 
 **Response (200):**
+
 ```json
 {
   "data": [
@@ -493,16 +532,16 @@ Authorization: Bearer {token}
 
 ## Códigos de Status HTTP
 
-| Código | Descrição |
-|--------|-----------|
-| `200` | Sucesso |
-| `201` | Criado |
-| `204` | Sem conteúdo (sucesso em delete) |
-| `400` | Requisição inválida |
-| `401` | Não autenticado |
-| `403` | Sem permissão |
-| `404` | Não encontrado |
-| `500` | Erro interno do servidor |
+| Código | Descrição                        |
+| ------ | -------------------------------- |
+| `200`  | Sucesso                          |
+| `201`  | Criado                           |
+| `204`  | Sem conteúdo (sucesso em delete) |
+| `400`  | Requisição inválida              |
+| `401`  | Não autenticado                  |
+| `403`  | Sem permissão                    |
+| `404`  | Não encontrado                   |
+| `500`  | Erro interno do servidor         |
 
 ## Formato de Erros
 
@@ -529,12 +568,14 @@ Todos os endpoints de listagem retornam:
 ## Headers Comuns
 
 **Request:**
+
 ```http
 Authorization: Bearer {token}
 Content-Type: application/json
 ```
 
 **Response:**
+
 ```http
 Content-Type: application/json
 ```
@@ -561,7 +602,7 @@ O token JWT contém os seguintes claims:
 Documentação interativa disponível em:
 
 ```
-http://localhost:5209/swagger
+http://localhost:{PORT}/swagger
 ```
 
 ## Testando a API
@@ -570,16 +611,16 @@ http://localhost:5209/swagger
 
 ```bash
 # Login
-curl -X POST http://localhost:5209/api/auth/login \
+curl -X POST http://localhost:{PORT}/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"identifier":"root","password":"root1234"}'
 
 # Listar usuários
-curl -X GET "http://localhost:5209/api/users?page=1&limit=10" \
+curl -X GET "http://localhost:{PORT}/api/users?page=1&limit=10" \
   -H "Authorization: Bearer {token}"
 
 # Criar usuário
-curl -X POST http://localhost:5209/api/users \
+curl -X POST http://localhost:{PORT}/api/users \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -594,7 +635,7 @@ curl -X POST http://localhost:5209/api/users \
 ### Com Postman
 
 1. Importe a collection do Swagger
-2. Configure a variável de ambiente `base_url` = `http://localhost:5209/api`
+2. Configure a variável de ambiente `base_url` = `http://localhost:{PORT}/api`
 3. Configure a variável `token` após o login
 4. Use `{{base_url}}` e `{{token}}` nas requisições
 
@@ -605,6 +646,7 @@ Atualmente não há rate limiting implementado. Para produção, considere adici
 ## Versionamento
 
 A API não possui versionamento. Para futuras versões, considere:
+
 - Path versioning: `/api/v2/users`
 - Header versioning: `Accept: application/vnd.api.v2+json`
 

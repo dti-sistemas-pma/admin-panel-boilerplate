@@ -13,18 +13,26 @@ cd admin-panel-boilerplate
 cp Api/.env.example Api/.env
 cp WebApp/.env.example WebApp/.env
 
-# 3. Inicie os containers
-docker-compose up -d
+# 3. Edite Api/.env com suas configurações
+# DB_HOST=db, DB_PORT=5432, DB_USER=postgres, DB_PASSWORD=postgres
+# DB_NAME=admin_panel_db, API_PORT={PORT}, SEED_DB=true
+# JWT_SECRET_KEY=sua-chave-secreta-aqui
+# WEB_APP_URL=http://localhost:5173
 
-# 4. Aguarde a inicialização (30-60 segundos)
-docker-compose logs -f
+# 4. Inicie os containers (desenvolvimento)
+docker compose -f docker-compose.development.yml up -d
+
+# 5. Aguarde a inicialização (30-60 segundos)
+docker compose -f docker-compose.development.yml logs -f
 ```
 
 ## Acesso
 
 - **Frontend:** http://localhost:5173
-- **Backend API:** http://localhost:5209
-- **Swagger:** http://localhost:5209/swagger
+- **Backend API:** http://localhost:{PORT}
+- **Swagger:** http://localhost:{PORT}/swagger
+
+> **Nota sobre `{PORT}`:** Substitua `{PORT}` pela porta que você definiu em `API_PORT` no arquivo `Api/.env`. Para projetos DTI PMA, siga a convenção de portas da sequência **521x** (5210, 5211, 5212...).
 
 ## Credenciais Padrão
 
@@ -82,18 +90,18 @@ Senha: root1234
 
 ```bash
 # Parar containers
-docker-compose stop
+docker compose -f docker-compose.development.yml stop
 
 # Reiniciar containers
-docker-compose restart
+docker compose -f docker-compose.development.yml restart
 
 # Ver logs
-docker-compose logs -f api
-docker-compose logs -f webapp
+docker compose -f docker-compose.development.yml logs -f api
+docker compose -f docker-compose.development.yml logs -f webapp
 
 # Recriar do zero (CUIDADO: apaga dados!)
-docker-compose down -v
-docker-compose up -d
+docker compose -f docker-compose.development.yml down -v
+docker compose -f docker-compose.development.yml up -d
 ```
 
 ### Backend (Sem Docker)
@@ -138,7 +146,7 @@ npm run preview
 
 ```bash
 # Login
-curl -X POST http://localhost:5209/api/auth/login \
+curl -X POST http://localhost:{PORT}/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"identifier":"root","password":"root1234"}'
 
@@ -146,11 +154,11 @@ curl -X POST http://localhost:5209/api/auth/login \
 TOKEN="eyJhbGciOiJIUzI1NiIs..."
 
 # Listar usuários
-curl -X GET http://localhost:5209/api/users?page=1&limit=10 \
+curl -X GET "http://localhost:{PORT}/api/users?page=1&limit=10" \
   -H "Authorization: Bearer $TOKEN"
 
 # Criar usuário
-curl -X POST http://localhost:5209/api/users \
+curl -X POST http://localhost:{PORT}/api/users \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -164,7 +172,7 @@ curl -X POST http://localhost:5209/api/users \
 
 ### Swagger UI
 
-1. Acesse: http://localhost:5209/swagger
+1. Acesse: http://localhost:{PORT}/swagger
 2. Clique em "Authorize"
 3. Digite: `Bearer {seu-token}`
 4. Teste os endpoints diretamente
@@ -242,13 +250,13 @@ admin-panel-boilerplate/
 
 ```bash
 # Descubra qual processo usa a porta
-lsof -i :5209
+lsof -i :{PORT}
 
 # Mate o processo
 kill -9 <PID>
 
 # Ou altere a porta em Api/.env
-API_PORT=5210
+API_PORT=5211
 ```
 
 ### Containers não iniciam
@@ -267,7 +275,7 @@ docker-compose up -d
 ```bash
 # Verifique a variável de ambiente
 cat WebApp/.env
-# Deve conter: VITE_API_BASE_URL=http://localhost:5209/api
+# Deve conter: VITE_API_BASE_URL=http://localhost:{PORT}/api
 
 # Reinicie o dev server
 cd WebApp
@@ -293,16 +301,20 @@ docker-compose restart api
 # Banco de Dados
 DB_HOST=db                  # ou localhost sem Docker
 DB_PORT=5432
-DB_USER=admin
-DB_PASSWORD=admin123
+DB_USER=postgres
+DB_PASSWORD=postgres
 DB_NAME=admin_panel_db
 
+# Configuração para Docker (PostgreSQL container)
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=admin_panel_db
+
 # Seeds
-SEED_DB=true
-RUN_USERS_SEED=false        # true para criar usuários de teste
+SEED_DB=true                # Cria dados iniciais (usuário root)
 
 # API
-API_PORT=5209
+API_PORT={PORT}
 
 # Segurança
 JWT_SECRET_KEY=sua-chave-secreta-minimo-32-caracteres
@@ -318,14 +330,14 @@ RESEND_FROM_EMAIL=
 ### Frontend (WebApp/.env)
 
 ```env
-VITE_API_BASE_URL=http://localhost:5209/api
+VITE_API_BASE_URL=http://localhost:{PORT}/api
 ```
 
 ## Recursos Adicionais
 
-- 📚 [Documentação Completa](./README.md)
-- 🔧 [API Swagger](http://localhost:5209/swagger)
-- 🐛 [Reportar Bug](https://github.com/seu-usuario/seu-repo/issues)
+- [Documentação Completa](./README.md)
+- [API Swagger](http://localhost:{PORT}/swagger)
+- [Reportar Bug](https://github.com/TheRermz/admin-panel-boilerplate/issues)
 
 ## Checklist de Produção
 
@@ -337,8 +349,7 @@ Antes de fazer deploy em produção:
 - [ ] Configure HTTPS/TLS
 - [ ] Configure backup do banco de dados
 - [ ] Configure variáveis de ambiente via secrets
-- [ ] Desabilite `SEED_DB` e `RUN_USERS_SEED`
-- [ ] Remova usuários de teste
+- [ ] Defina `SEED_DB=false` (ou remova a variável)
 - [ ] Configure rate limiting
 - [ ] Configure logs estruturados
 - [ ] Configure monitoramento
