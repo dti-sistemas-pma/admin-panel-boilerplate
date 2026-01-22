@@ -47,25 +47,27 @@ O Admin Panel Boilerplate segue uma arquitetura em camadas com separação clara
 
 **Backend:**
 - Framework: ASP.NET Core 8
-- ORM: Entity Framework Core 9
-- Banco de Dados: PostgreSQL 15
-- Autenticação: JWT (JSON Web Tokens)
-- Hashing: BCrypt.NET
-- Email: Resend API
-- Documentação: Swagger/OpenAPI
+- ORM: Entity Framework Core 9.0.9
+- Banco de Dados: PostgreSQL 14+
+- Autenticação: JWT (System.IdentityModel.Tokens.Jwt 8.14.0)
+- Hashing: BCrypt.Net-Next 4.0.3
+- Email: Resend API 0.1.7
+- Documentação: Swagger/OpenAPI (Swashbuckle 6.6.2)
 
 **Frontend:**
-- Framework: React 19
-- Build Tool: Vite 7
-- Linguagem: TypeScript 5
-- UI Framework: Material-UI 7
-- Roteamento: React Router 7
-- HTTP Client: Axios
-- Date Utils: date-fns
+- Framework: React 19.1.1
+- Build Tool: Vite 7.1.7
+- Linguagem: TypeScript 5.9.3
+- UI Framework: Material-UI 7.3.4
+- Roteamento: React Router 7.9.4
+- HTTP Client: Axios 1.12.2
+- Date Utils: date-fns 4.1.0
 
-**Infraestrutura:**
+**Infraestrutura & CI/CD:**
 - Containerização: Docker
 - Orquestração: Docker Compose
+- CI/CD: GitHub Actions
+- Versionamento: Semantic Release 25
 
 ### Padrões de Design
 
