@@ -20,6 +20,7 @@ Documentação completa do frontend React da aplicação.
 O frontend é uma Single Page Application (SPA) construída com React 19, TypeScript e Material-UI.
 
 **Características:**
+
 - React 19 com TypeScript
 - Vite como build tool
 - Material-UI para componentes
@@ -154,6 +155,7 @@ WebApp/src/
 **Arquivo:** `WebApp/src/routes/ProtectedRoute.tsx:1`
 
 **Responsabilidades:**
+
 - Verificar autenticação
 - Verificar permissões
 - Redirecionar se não autorizado
@@ -186,6 +188,7 @@ export const ProtectedRoute = ({ children, requiredPermission }: Props) => {
 **Arquivo:** `WebApp/src/contexts/AuthContext.tsx:1`
 
 **Estado:**
+
 ```typescript
 interface AuthContextType {
   token: string | null;
@@ -199,11 +202,13 @@ interface AuthContextType {
 ```
 
 **Funcionalidades:**
+
 - Armazena token e dados do usuário no localStorage
 - Persiste sessão entre reloads
 - Métodos de autenticação completos
 
 **Uso:**
+
 ```typescript
 const { token, authUser, handleLogin, handleLogout } = useAuth();
 ```
@@ -213,19 +218,22 @@ const { token, authUser, handleLogin, handleLogout } = useAuth();
 **Arquivo:** `WebApp/src/contexts/ThemeContext.tsx:1`
 
 **Estado:**
+
 ```typescript
 interface ThemeContextType {
-  mode: 'light' | 'dark';
+  mode: "light" | "dark";
   toggleTheme: () => void;
 }
 ```
 
 **Funcionalidades:**
+
 - Gerencia tema claro/escuro
 - Persiste preferência no localStorage
 - Integra com Material-UI ThemeProvider
 
 **Uso:**
+
 ```typescript
 const { mode, toggleTheme } = useThemeMode();
 ```
@@ -237,11 +245,12 @@ const { mode, toggleTheme } = useThemeMode();
 **Arquivo:** `WebApp/src/hooks/useAuth.ts:1`
 
 Acessa o AuthContext:
+
 ```typescript
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error("useAuth must be used within AuthProvider");
   }
   return context;
 };
@@ -252,6 +261,7 @@ export const useAuth = () => {
 **Arquivo:** `WebApp/src/hooks/useUsers.ts:1`
 
 **Estado e Métodos:**
+
 ```typescript
 interface UseUsersReturn {
   users: User[];
@@ -268,12 +278,14 @@ interface UseUsersReturn {
 ```
 
 **Características:**
+
 - Gerencia estado de usuários
 - Paginação integrada
 - Loading e error states
 - Operações CRUD completas
 
 **Uso:**
+
 ```typescript
 const { users, loading, fetchUsers, createUser } = useUsers();
 
@@ -293,6 +305,7 @@ Estrutura similar ao useUsers para recursos do sistema.
 **Arquivo:** `WebApp/src/hooks/useReports.ts:1`
 
 **Estado e Métodos:**
+
 ```typescript
 interface UseReportsReturn {
   logs: SystemLog[];
@@ -322,10 +335,12 @@ interface LogFilters {
 **Props:** Nenhuma (usa AuthContext)
 
 **Campos:**
+
 - Identifier (email ou username)
 - Password
 
 **Funcionalidades:**
+
 - Validação de campos
 - Loading state
 - Tratamento de erros
@@ -336,6 +351,7 @@ interface LogFilters {
 **Arquivo:** `WebApp/src/components/UserForm/index.tsx:1`
 
 **Props:**
+
 ```typescript
 interface Props {
   initialData?: User | null;
@@ -345,6 +361,7 @@ interface Props {
 ```
 
 **Campos:**
+
 - Username
 - Email
 - Password (opcional na edição)
@@ -352,6 +369,7 @@ interface Props {
 - Permissions (multi-select)
 
 **Validações:**
+
 - Email válido
 - Senha mínima 6 caracteres
 - Campos obrigatórios
@@ -369,6 +387,7 @@ Similar ao UserForm, para recursos do sistema.
 **Arquivo:** `WebApp/src/components/UsersTable/index.tsx:1`
 
 **Props:**
+
 ```typescript
 interface Props {
   users: User[];
@@ -378,6 +397,7 @@ interface Props {
 ```
 
 **Colunas:**
+
 - ID
 - Username
 - Email
@@ -387,6 +407,7 @@ interface Props {
 - Actions (edit, delete)
 
 **Funcionalidades:**
+
 - Ordenação por coluna
 - Ações condicionais baseadas em permissões
 - Confirmação de exclusão
@@ -400,12 +421,14 @@ Similar ao UsersTable para recursos.
 **Arquivo:** `WebApp/src/components/ReportsTable/index.tsx:1`
 
 **Colunas:**
+
 - ID
 - User
 - Action
 - Created At
 
 **Funcionalidades:**
+
 - Filtros (usuário, ação, data)
 - Paginação
 - Exportação (futuro)
@@ -417,6 +440,7 @@ Similar ao UsersTable para recursos.
 **Arquivo:** `WebApp/src/components/UsersSelect/index.tsx:1`
 
 **Props:**
+
 ```typescript
 interface Props {
   value: number | null;
@@ -438,18 +462,30 @@ Similar ao UsersSelect para recursos.
 **Arquivo:** `WebApp/src/components/SidePanel/index.tsx:1`
 
 **Responsabilidades:**
+
 - Menu lateral navegável
 - Exibe apenas itens com permissão (via MenuVisibility)
 - Destaque do item ativo
 - Botão de logout
 
 **Itens do Menu:**
+
 ```typescript
 const menuItems = [
-  { path: '/profile', label: 'Perfil', icon: PersonIcon, permission: null },
-  { path: '/users', label: 'Usuários', icon: PeopleIcon, permission: 'users' },
-  { path: '/resources', label: 'Recursos', icon: FolderIcon, permission: 'resources' },
-  { path: '/reports', label: 'Relatórios', icon: AssessmentIcon, permission: 'reports' },
+  { path: "/profile", label: "Perfil", icon: PersonIcon, permission: null },
+  { path: "/users", label: "Usuários", icon: PeopleIcon, permission: "users" },
+  {
+    path: "/resources",
+    label: "Recursos",
+    icon: FolderIcon,
+    permission: "resources",
+  },
+  {
+    path: "/reports",
+    label: "Relatórios",
+    icon: AssessmentIcon,
+    permission: "reports",
+  },
 ];
 ```
 
@@ -468,22 +504,25 @@ Exibe dados do usuário autenticado no topo do layout.
 ```typescript
 export const authServices = {
   login: async (credentials: LoginDto) => {
-    const response = await api.post('/auth/login', credentials);
+    const response = await api.post("/auth/login", credentials);
     return response.data;
   },
 
   externalLogin: async (token: string) => {
-    const response = await api.post('/auth/external', { token });
+    const response = await api.post("/auth/external", { token });
     return response.data;
   },
 
   requestPasswordReset: async (email: string) => {
-    const response = await api.post('/auth/password/request-new', { email });
+    const response = await api.post("/auth/password/request-new", { email });
     return response.data;
   },
 
   resetPassword: async (token: string, newPassword: string) => {
-    const response = await api.post('/auth/password/reset', { token, newPassword });
+    const response = await api.post("/auth/password/reset", {
+      token,
+      newPassword,
+    });
     return response.data;
   },
 };
@@ -496,7 +535,7 @@ export const authServices = {
 ```typescript
 export const usersServices = {
   listUsers: async (page: number, limit: number) => {
-    const response = await api.get('/users', { params: { page, limit } });
+    const response = await api.get("/users", { params: { page, limit } });
     return response.data;
   },
 
@@ -506,12 +545,12 @@ export const usersServices = {
   },
 
   listUsersForSelect: async () => {
-    const response = await api.get('/users/options');
+    const response = await api.get("/users/options");
     return response.data;
   },
 
   createUser: async (data: CreateUserDto) => {
-    const response = await api.post('/users', data);
+    const response = await api.post("/users", data);
     return response.data;
   },
 
@@ -537,7 +576,7 @@ Similar ao usersServices para recursos.
 ```typescript
 export const systemLogsServices = {
   listSystemLogs: async (filters: LogFilters) => {
-    const response = await api.get('/reports', { params: filters });
+    const response = await api.get("/reports", { params: filters });
     return response.data;
   },
 };
@@ -551,11 +590,11 @@ export const systemLogsServices = {
 
 ```typescript
 export const PermissionsMap = {
-  ROOT: 'root',
-  USERS: 'users',
-  RESOURCES: 'resources',
-  REPORTS: 'reports',
-  PROFILE: 'profile',
+  ROOT: "root",
+  USERS: "users",
+  RESOURCES: "resources",
+  REPORTS: "reports",
+  PROFILE: "profile",
 };
 ```
 
@@ -568,26 +607,37 @@ export const isRootUser = (user: User | null): boolean => {
   return user?.id === 1;
 };
 
-export const hasPermission = (user: User | null, permission: string): boolean => {
+export const hasPermission = (
+  user: User | null,
+  permission: string,
+): boolean => {
   if (!user) return false;
   if (isRootUser(user)) return true;
-  return user.permissions.some(p => p.name === permission);
+  return user.permissions.some((p) => p.name === permission);
 };
 
 export const canEditPassword = (authUser: User, targetUser: User): boolean => {
   return isRootUser(authUser) || authUser.id === targetUser.id;
 };
 
-export const canEditPermissions = (authUser: User, targetUser: User): boolean => {
+export const canEditPermissions = (
+  authUser: User,
+  targetUser: User,
+): boolean => {
   return isRootUser(authUser) && targetUser.id !== 1;
 };
 
-export const filterAssignablePermissions = (authUser: User, allPermissions: SystemResource[]): SystemResource[] => {
+export const filterAssignablePermissions = (
+  authUser: User,
+  allPermissions: SystemResource[],
+): SystemResource[] => {
   if (isRootUser(authUser)) {
     return allPermissions;
   }
   // Usuários não-root não podem atribuir root e resources
-  return allPermissions.filter(p => p.name !== 'root' && p.name !== 'resources');
+  return allPermissions.filter(
+    (p) => p.name !== "root" && p.name !== "resources",
+  );
 };
 ```
 
@@ -596,8 +646,11 @@ export const filterAssignablePermissions = (authUser: User, allPermissions: Syst
 **Arquivo:** `WebApp/src/permissions/MenuVisibility.ts:1`
 
 ```typescript
-export const filterMenuByPermissions = (menuItems: MenuItem[], user: User | null): MenuItem[] => {
-  return menuItems.filter(item => {
+export const filterMenuByPermissions = (
+  menuItems: MenuItem[],
+  user: User | null,
+): MenuItem[] => {
+  return menuItems.filter((item) => {
     if (!item.permission) return true; // Sem restrição
     return hasPermission(user, item.permission);
   });
@@ -611,30 +664,33 @@ export const filterMenuByPermissions = (menuItems: MenuItem[], user: User | null
 **Arquivo:** `WebApp/src/theme.ts:1`
 
 ```typescript
-export const getTheme = (mode: 'light' | 'dark') => createTheme({
-  palette: {
-    mode,
-    primary: {
-      main: mode === 'light' ? '#198a0fff' : '#b6f990ff',
+export const getTheme = (mode: "light" | "dark") =>
+  createTheme({
+    palette: {
+      mode,
+      primary: {
+        main: mode === "light" ? "#198a0fff" : "#b6f990ff",
+      },
+      background: {
+        default: mode === "light" ? "#f5f5f5" : "#121212",
+        paper: mode === "light" ? "#ffffff" : "#1e1e1e",
+      },
     },
-    background: {
-      default: mode === 'light' ? '#f5f5f5' : '#121212',
-      paper: mode === 'light' ? '#ffffff' : '#1e1e1e',
+    typography: {
+      fontFamily: "Roboto, Arial, sans-serif",
     },
-  },
-  typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
-  },
-});
+  });
 ```
 
 **Cores:**
 
 **Modo Claro:**
+
 - Primary: `#198a0fff` (verde)
 - Background: `#f5f5f5` / `#fff`
 
 **Modo Escuro:**
+
 - Primary: `#b6f990ff` (verde claro)
 - Background: `#121212` / `#1e1e1e`
 
@@ -652,13 +708,13 @@ const api = axios.create({
 // Request Interceptor: Adiciona token JWT
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 // Response Interceptor: Redireciona em 401
@@ -666,12 +722,12 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('authUser');
-      window.location.href = '/login';
+      localStorage.removeItem("token");
+      localStorage.removeItem("authUser");
+      window.location.href = "/login";
     }
     return Promise.reject(error);
-  }
+  },
 );
 ```
 
@@ -680,7 +736,7 @@ api.interceptors.response.use(
 **Arquivo:** `WebApp/.env.example:1`
 
 ```env
-VITE_API_BASE_URL=http://localhost:5209/api
+VITE_API_BASE_URL=http://localhost:{PORT}/api
 ```
 
 ### Vite Config
@@ -704,6 +760,7 @@ export default defineConfig({
 **Arquivo:** `WebApp/src/layouts/DefaultLayout.tsx:1`
 
 **Estrutura:**
+
 - SidePanel (menu lateral)
 - Toggle para abrir/fechar menu
 - Toggle de tema (light/dark)
@@ -717,6 +774,7 @@ export default defineConfig({
 **Arquivo:** `WebApp/src/layouts/CleanLayout.tsx:1`
 
 **Estrutura:**
+
 - Layout minimalista
 - Sem menu lateral
 - Acompanha tema
@@ -773,19 +831,34 @@ export interface SystemLog {
 ```json
 {
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.0",
+    "@mui/icons-material": "^7.3.4",
+    "@mui/material": "^7.3.4",
+    "@mui/x-date-pickers": "^8.16.0",
+    "@mui/x-date-pickers-pro": "^8.16.0",
+    "axios": "^1.12.2",
+    "date-fns": "^4.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.4",
-    "@mui/material": "^7.3.4",
-    "@mui/icons-material": "^7.3.4",
-    "@mui/x-date-pickers": "^8.16.0",
-    "axios": "^1.12.2",
-    "date-fns": "^4.1.0"
+    "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "vite": "^7.1.7",
-    "@vitejs/plugin-react": "^5.0.0"
+    "@eslint/js": "^9.36.0",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "^7.1.7"
   }
 }
 ```

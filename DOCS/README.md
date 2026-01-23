@@ -5,6 +5,7 @@ Bem-vindo à documentação completa do Admin Panel Boilerplate. Este é um sist
 ## Visão Geral
 
 O Admin Panel Boilerplate é uma aplicação completa que combina:
+
 - **Backend**: .NET 8 + PostgreSQL + Entity Framework Core
 - **Frontend**: React 19 + TypeScript + Vite + Material-UI
 - **Infraestrutura**: Docker + Docker Compose
@@ -35,28 +36,40 @@ O Admin Panel Boilerplate é uma aplicação completa que combina:
 ### 📚 Documentação Completa
 
 #### 1. [Instalação e Configuração](./01-INSTALACAO.md)
+
 Como configurar e executar o projeto local ou via Docker. Inclui troubleshooting e configuração de produção.
 
 #### 2. [Arquitetura do Sistema](./02-ARQUITETURA.md)
+
 Compreenda a estrutura, padrões de design, fluxo de dados e modelo do banco de dados.
 
 #### 3. [Backend - API](./03-BACKEND.md)
+
 Documentação completa do backend .NET: Controllers, Services, Models, DTOs, Middlewares e Repository.
 
 #### 4. [Frontend - WebApp](./04-FRONTEND.md)
+
 Documentação completa do frontend React: Componentes, Hooks, Contextos, Rotas e Services.
 
 #### 5. [API Reference - Endpoints](./05-API-REFERENCE.md)
+
 Referência completa de todos os endpoints da API REST com exemplos de uso.
 
 #### 6. [Sistema de Permissões](./06-PERMISSOES.md)
+
 Como funciona o sistema RBAC, regras de permissão e implementação frontend/backend.
 
 #### 7. [Guia de Uso](./07-GUIA-DE-USO.md)
+
 Tutoriais práticos para usuários: gerenciamento, relatórios e casos de uso reais.
 
 #### 8. [Desenvolvimento](./08-DESENVOLVIMENTO.md)
+
 Guia completo para estender o boilerplate: criar módulos, testes e deploy.
+
+#### 9. [CI/CD](./09-CI-CD.md)
+
+Pipeline completo de CI/CD com GitHub Actions, Semantic Release e deploy automático.
 
 ## Início Rápido
 
@@ -71,16 +84,19 @@ cd admin-panel-boilerplate
 cp Api/.env.example Api/.env
 cp WebApp/.env.example WebApp/.env
 
-# Inicie os containers
-docker-compose up -d
+# Edite Api/.env com suas configurações (DB, JWT, etc.)
+
+# Inicie os containers (desenvolvimento)
+docker compose -f docker-compose.development.yml up -d
 
 # Acesse a aplicação
 # Frontend: http://localhost:5173
-# Backend: http://localhost:5209
-# Swagger: http://localhost:5209/swagger
+# Backend: http://localhost:{PORT}
+# Swagger: http://localhost:{PORT}/swagger
 ```
 
 **Credenciais padrão:**
+
 - Usuário: `root`
 - Senha: `root1234`
 
@@ -91,26 +107,30 @@ Consulte o guia detalhado em [Instalação e Configuração](./01-INSTALACAO.md)
 ## Tecnologias Utilizadas
 
 ### Backend
+
 - .NET 8
-- Entity Framework Core 9.0
-- PostgreSQL 15
-- JWT Authentication
-- BCrypt.NET
-- Resend (email)
-- Swagger/OpenAPI
+- Entity Framework Core 9.0.9
+- PostgreSQL 14+
+- JWT Authentication (System.IdentityModel.Tokens.Jwt 8.14.0)
+- BCrypt.Net-Next 4.0.3
+- Resend 0.1.7 (email)
+- Swagger/OpenAPI (Swashbuckle 6.6.2)
 
 ### Frontend
-- React 19
-- TypeScript 5
-- Vite 7
-- Material-UI 7
-- React Router 7
-- Axios
-- Date-fns
 
-### DevOps
-- Docker
-- Docker Compose
+- React 19.1.1
+- TypeScript 5.9.3
+- Vite 7.1.7
+- Material-UI (MUI) 7.3.4
+- React Router 7.9.4
+- Axios 1.12.2
+- Date-fns 4.1.0
+
+### DevOps & CI/CD
+
+- Docker & Docker Compose
+- GitHub Actions
+- Semantic Release 25
 
 ## Recursos do Sistema (Padrão)
 

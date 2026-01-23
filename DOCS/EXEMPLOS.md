@@ -414,9 +414,13 @@ public class ProductsController : ControllerBase
 ### Hook Customizado Completo
 
 ```typescript
-import { useState, useCallback } from 'react';
-import { Product, CreateProductDto, UpdateProductDto } from '../interfaces/Product';
-import { productsServices } from '../services/productsServices';
+import { useState, useCallback } from "react";
+import {
+  Product,
+  CreateProductDto,
+  UpdateProductDto,
+} from "../interfaces/Product";
+import { productsServices } from "../services/productsServices";
 
 interface UseProductsReturn {
   products: Product[];
@@ -462,8 +466,8 @@ export const useProducts = (): UseProductsReturn => {
       setTotalProducts(response.total);
       setCurrentPage(page);
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Erro ao buscar produtos');
-      console.error('Error fetching products:', err);
+      setError(err.response?.data?.error || "Erro ao buscar produtos");
+      console.error("Error fetching products:", err);
     } finally {
       setLoading(false);
     }
@@ -478,74 +482,90 @@ export const useProducts = (): UseProductsReturn => {
       setTotalProducts(response.total);
       setCurrentPage(filters.page);
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Erro ao buscar produtos');
-      console.error('Error fetching filtered products:', err);
+      setError(err.response?.data?.error || "Erro ao buscar produtos");
+      console.error("Error fetching filtered products:", err);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const searchProducts = useCallback(async (key: string, page: number, limit: number) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await productsServices.searchProducts(key, page, limit);
-      setProducts(response.data);
-      setTotalProducts(response.total);
-      setCurrentPage(page);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Erro ao buscar produtos');
-      console.error('Error searching products:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const searchProducts = useCallback(
+    async (key: string, page: number, limit: number) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await productsServices.searchProducts(
+          key,
+          page,
+          limit,
+        );
+        setProducts(response.data);
+        setTotalProducts(response.total);
+        setCurrentPage(page);
+      } catch (err: any) {
+        setError(err.response?.data?.error || "Erro ao buscar produtos");
+        console.error("Error searching products:", err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
-  const createProduct = useCallback(async (data: CreateProductDto) => {
-    setLoading(true);
-    setError(null);
-    try {
-      await productsServices.createProduct(data);
-      // Recarrega a lista atual
-      await fetchProducts(currentPage, 10);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Erro ao criar produto');
-      console.error('Error creating product:', err);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [currentPage, fetchProducts]);
+  const createProduct = useCallback(
+    async (data: CreateProductDto) => {
+      setLoading(true);
+      setError(null);
+      try {
+        await productsServices.createProduct(data);
+        // Recarrega a lista atual
+        await fetchProducts(currentPage, 10);
+      } catch (err: any) {
+        setError(err.response?.data?.error || "Erro ao criar produto");
+        console.error("Error creating product:", err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [currentPage, fetchProducts],
+  );
 
-  const updateProduct = useCallback(async (id: number, data: UpdateProductDto) => {
-    setLoading(true);
-    setError(null);
-    try {
-      await productsServices.updateProduct(id, data);
-      await fetchProducts(currentPage, 10);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Erro ao atualizar produto');
-      console.error('Error updating product:', err);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [currentPage, fetchProducts]);
+  const updateProduct = useCallback(
+    async (id: number, data: UpdateProductDto) => {
+      setLoading(true);
+      setError(null);
+      try {
+        await productsServices.updateProduct(id, data);
+        await fetchProducts(currentPage, 10);
+      } catch (err: any) {
+        setError(err.response?.data?.error || "Erro ao atualizar produto");
+        console.error("Error updating product:", err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [currentPage, fetchProducts],
+  );
 
-  const deleteProduct = useCallback(async (id: number) => {
-    setLoading(true);
-    setError(null);
-    try {
-      await productsServices.deleteProduct(id);
-      await fetchProducts(currentPage, 10);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Erro ao deletar produto');
-      console.error('Error deleting product:', err);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [currentPage, fetchProducts]);
+  const deleteProduct = useCallback(
+    async (id: number) => {
+      setLoading(true);
+      setError(null);
+      try {
+        await productsServices.deleteProduct(id);
+        await fetchProducts(currentPage, 10);
+      } catch (err: any) {
+        setError(err.response?.data?.error || "Erro ao deletar produto");
+        console.error("Error deleting product:", err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [currentPage, fetchProducts],
+  );
 
   return {
     products,
@@ -891,29 +911,29 @@ export default ProductsTable;
 
 ```javascript
 // auth.js - Módulo de autenticação
-const API_BASE_URL = 'http://localhost:5209/api';
+const API_BASE_URL = "http://localhost:{PORT}/api";
 
 class AdminPanelAPI {
   constructor() {
-    this.token = localStorage.getItem('admin_token');
+    this.token = localStorage.getItem("admin_token");
   }
 
   async login(identifier, password) {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ identifier, password }),
     });
 
     if (!response.ok) {
-      throw new Error('Login falhou');
+      throw new Error("Login falhou");
     }
 
     const data = await response.json();
     this.token = data.token;
-    localStorage.setItem('admin_token', data.token);
+    localStorage.setItem("admin_token", data.token);
     return data;
   }
 
@@ -922,13 +942,13 @@ class AdminPanelAPI {
       `${API_BASE_URL}/users?page=${page}&limit=${limit}`,
       {
         headers: {
-          'Authorization': `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
 
     if (!response.ok) {
-      throw new Error('Erro ao buscar usuários');
+      throw new Error("Erro ao buscar usuários");
     }
 
     return await response.json();
@@ -936,16 +956,16 @@ class AdminPanelAPI {
 
   async createUser(userData) {
     const response = await fetch(`${API_BASE_URL}/users`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${this.token}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao criar usuário');
+      throw new Error("Erro ao criar usuário");
     }
 
     return await response.json();
@@ -956,7 +976,7 @@ class AdminPanelAPI {
 const api = new AdminPanelAPI();
 
 // Login
-await api.login('root', 'root1234');
+await api.login("root", "root1234");
 
 // Buscar usuários
 const users = await api.getUsers(1, 10);
@@ -964,10 +984,10 @@ console.log(users);
 
 // Criar usuário
 const newUser = await api.createUser({
-  username: 'joao',
-  email: 'joao@example.com',
-  password: 'senha123',
-  fullName: 'João da Silva',
+  username: "joao",
+  email: "joao@example.com",
+  password: "senha123",
+  fullName: "João da Silva",
   permissionsIds: [2],
 });
 ```
@@ -1011,6 +1031,7 @@ public class WebhooksController : ControllerBase
 ## Mais Exemplos
 
 Para mais exemplos, consulte:
+
 - [Guia de Desenvolvimento](./08-DESENVOLVIMENTO.md) - Como estender o sistema
 - [API Reference](./05-API-REFERENCE.md) - Documentação completa dos endpoints
 - Código fonte em `Api/Services/` e `WebApp/src/`
