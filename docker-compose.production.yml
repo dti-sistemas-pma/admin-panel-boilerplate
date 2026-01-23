@@ -1,11 +1,10 @@
 services:
   api:
-    build:
-      context: ./Api
-      dockerfile: Dockerfile
-    container_name: admin-panel-api
+    image: therermz/admin-boiler-plate:latest
     env_file:
       - ./Api/.env
+    environment:
+      - ASPNETCORE_URLS=http://+:5210
     ports:
       - '5210:5210'
     restart: unless-stopped
@@ -14,10 +13,6 @@ services:
       - apparmor=unconfined
     networks:
       - admin-panel-network
-    volumes:
-      - ./Api:/app
-      - /app/obj      # Evita conflito com build local
-      - /app/bin      # Evita conflito com build local
 
 networks:
   admin-panel-network:
