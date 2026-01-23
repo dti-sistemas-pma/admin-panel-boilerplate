@@ -21,6 +21,7 @@ Documentação completa do backend .NET 8 da aplicação.
 O backend é uma API REST construída com ASP.NET Core 8, seguindo princípios de Clean Architecture e separação de responsabilidades.
 
 **Características:**
+
 - RESTful API
 - Autenticação JWT
 - RBAC (Role-Based Access Control)
@@ -31,9 +32,9 @@ O backend é uma API REST construída com ASP.NET Core 8, seguindo princípios d
 - Middleware Pipeline
 - Swagger/OpenAPI
 
-**Porta padrão:** 5209
+**Porta padrão:** DEFINA A PORTA PADRÃO -- PARA APLICAÇÕES NO DTI PMA, USE A SEQUÊNCIA 521X (Veja quais estão sendo utilizadas)
 
-**Base URL:** `http://localhost:5209/api`
+**Base URL:** `http://localhost:{PORT}/api`
 
 ## Estrutura de Pastas
 
@@ -70,12 +71,12 @@ Controllers são responsáveis apenas por receber requisições HTTP, validar en
 
 **Endpoints:**
 
-| Método | Rota | Descrição | Auth |
-|--------|------|-----------|------|
-| POST | `/login` | Login local | Não |
-| POST | `/external` | Login via token externo | Não |
-| POST | `/password/request-new` | Solicitar reset de senha | Não |
-| POST | `/password/reset` | Redefinir senha | Não |
+| Método | Rota                    | Descrição                | Auth |
+| ------ | ----------------------- | ------------------------ | ---- |
+| POST   | `/login`                | Login local              | Não  |
+| POST   | `/external`             | Login via token externo  | Não  |
+| POST   | `/password/request-new` | Solicitar reset de senha | Não  |
+| POST   | `/password/reset`       | Redefinir senha          | Não  |
 
 **Exemplo de implementação:**
 
@@ -105,17 +106,18 @@ public class AuthController : ControllerBase
 
 **Endpoints:**
 
-| Método | Rota | Descrição | Paginação |
-|--------|------|-----------|-----------|
-| GET | `/` | Lista usuários | Sim |
-| GET | `/search?key={busca}` | Busca usuários | Sim |
-| GET | `/{id}` | Busca por ID | Não |
-| GET | `/options` | Lista resumida | Não |
-| POST | `/` | Cria usuário | Não |
-| PUT | `/{id}` | Atualiza usuário | Não |
-| DELETE | `/{id}` | Desativa usuário | Não |
+| Método | Rota                  | Descrição        | Paginação |
+| ------ | --------------------- | ---------------- | --------- |
+| GET    | `/`                   | Lista usuários   | Sim       |
+| GET    | `/search?key={busca}` | Busca usuários   | Sim       |
+| GET    | `/{id}`               | Busca por ID     | Não       |
+| GET    | `/options`            | Lista resumida   | Não       |
+| POST   | `/`                   | Cria usuário     | Não       |
+| PUT    | `/{id}`               | Atualiza usuário | Não       |
+| DELETE | `/{id}`               | Desativa usuário | Não       |
 
 **Query Parameters (paginação):**
+
 - `page`: Número da página (padrão: 1)
 - `limit`: Itens por página (padrão: 10)
 
@@ -129,15 +131,15 @@ public class AuthController : ControllerBase
 
 **Endpoints:**
 
-| Método | Rota | Descrição | Paginação |
-|--------|------|-----------|-----------|
-| GET | `/` | Lista recursos | Sim |
-| GET | `/search?key={busca}` | Busca recursos | Sim |
-| GET | `/{id}` | Busca por ID | Não |
-| GET | `/options` | Lista resumida | Não |
-| POST | `/` | Cria recurso | Não |
-| PUT | `/{id}` | Atualiza recurso | Não |
-| DELETE | `/{id}` | Desativa recurso | Não |
+| Método | Rota                  | Descrição        | Paginação |
+| ------ | --------------------- | ---------------- | --------- |
+| GET    | `/`                   | Lista recursos   | Sim       |
+| GET    | `/search?key={busca}` | Busca recursos   | Sim       |
+| GET    | `/{id}`               | Busca por ID     | Não       |
+| GET    | `/options`            | Lista resumida   | Não       |
+| POST   | `/`                   | Cria recurso     | Não       |
+| PUT    | `/{id}`               | Atualiza recurso | Não       |
+| DELETE | `/{id}`               | Desativa recurso | Não       |
 
 ### SystemLogsController
 
@@ -149,11 +151,12 @@ public class AuthController : ControllerBase
 
 **Endpoints:**
 
-| Método | Rota | Descrição | Filtros |
-|--------|------|-----------|---------|
-| GET | `/` | Relatórios de logs | Sim |
+| Método | Rota | Descrição          | Filtros |
+| ------ | ---- | ------------------ | ------- |
+| GET    | `/`  | Relatórios de logs | Sim     |
 
 **Query Parameters:**
+
 - `page`: Número da página
 - `limit`: Itens por página
 - `userId`: Filtrar por usuário (opcional)
@@ -174,6 +177,7 @@ Services contêm toda a lógica de negócio. Cada operação tem seu próprio se
 **Arquivo:** `Api/Services/AuthServices/LoginService.cs:1`
 
 **Responsabilidades:**
+
 - Validar credenciais (email/username + senha)
 - Verificar se usuário está ativo
 - Comparar senha com BCrypt
@@ -182,11 +186,13 @@ Services contêm toda a lógica de negócio. Cada operação tem seu próprio se
 - Retornar token + dados do usuário
 
 **Método principal:**
+
 ```csharp
 public async Task<LoginResponseDto> ExecuteAsync(LoginDto dto)
 ```
 
 **Lógica:**
+
 1. Busca usuário por email ou username
 2. Valida se usuário existe e está ativo
 3. Compara senha com BCrypt
@@ -199,12 +205,14 @@ public async Task<LoginResponseDto> ExecuteAsync(LoginDto dto)
 **Arquivo:** `Api/Services/AuthServices/ExternalTokenService.cs:1`
 
 **Responsabilidades:**
+
 - Autenticar via token externo (SSO corporativo)
 - Validar token externo
 - Gerar JWT interno
 - Registrar log
 
 **Método principal:**
+
 ```csharp
 public async Task<LoginResponseDto> ExecuteAsync(ExternalLoginDto dto)
 ```
@@ -216,12 +224,14 @@ public async Task<LoginResponseDto> ExecuteAsync(ExternalLoginDto dto)
 **Responsabilidades:**
 
 **1. RequestPasswordReset:**
+
 - Validar email
 - Gerar token JWT temporário (expira em 30min)
 - Enviar email via EmailService
 - Registrar log
 
 **2. ResetPassword:**
+
 - Validar token JWT
 - Validar nova senha
 - Hashear nova senha com BCrypt
@@ -233,10 +243,12 @@ public async Task<LoginResponseDto> ExecuteAsync(ExternalLoginDto dto)
 **Arquivo:** `Api/Services/AuthServices/EmailService.cs:1`
 
 **Responsabilidades:**
+
 - Enviar emails via Resend API
 - Template de redefinição de senha
 
 **Método principal:**
+
 ```csharp
 public async Task SendPasswordResetEmail(string email, string token)
 ```
@@ -250,12 +262,14 @@ public async Task SendPasswordResetEmail(string email, string token)
 **Arquivo:** `Api/Services/UsersServices/CreateUser.cs:1`
 
 **Validações:**
+
 - Email único
 - Username único
 - Permissões válidas
 - Senha forte (mínimo 6 caracteres)
 
 **Processo:**
+
 1. Valida email/username únicos
 2. Hasheia senha com BCrypt
 3. Cria entidade User
@@ -269,6 +283,7 @@ public async Task SendPasswordResetEmail(string email, string token)
 **Arquivo:** `Api/Services/UsersServices/GetAllUsers.cs:1`
 
 **Responsabilidades:**
+
 - Buscar usuários com paginação
 - Incluir permissões relacionadas
 - Aplicar filtro de ativos
@@ -279,6 +294,7 @@ public async Task SendPasswordResetEmail(string email, string token)
 **Arquivo:** `Api/Services/UsersServices/GetUserById.cs:1`
 
 **Responsabilidades:**
+
 - Buscar usuário por ID
 - Incluir permissões
 - Validar se existe e está ativo
@@ -288,6 +304,7 @@ public async Task SendPasswordResetEmail(string email, string token)
 **Arquivo:** `Api/Services/UsersServices/UpdateUser.cs:1`
 
 **Validações:**
+
 - Usuário existe
 - Email único (se alterado)
 - Username único (se alterado)
@@ -296,6 +313,7 @@ public async Task SendPasswordResetEmail(string email, string token)
 - Não pode atribuir permissão root/resources se não for root
 
 **Processo:**
+
 1. Busca usuário existente
 2. Valida unicidade de email/username
 3. Atualiza campos
@@ -312,11 +330,13 @@ public async Task SendPasswordResetEmail(string email, string token)
 **Tipo:** Soft Delete (marca `active = false`)
 
 **Validações:**
+
 - Usuário existe
 - Não pode deletar o próprio usuário
 - Não pode deletar usuário root (ID 1)
 
 **Processo:**
+
 1. Valida restrições
 2. Chama repository.DeleteAsync (soft delete)
 3. Registra log
@@ -326,6 +346,7 @@ public async Task SendPasswordResetEmail(string email, string token)
 **Arquivo:** `Api/Services/UsersServices/SearchUsers.cs:1`
 
 **Responsabilidades:**
+
 - Buscar usuários por texto (username, email ou fullName)
 - Paginação
 - Retornar UserResponseDto[]
@@ -335,6 +356,7 @@ public async Task SendPasswordResetEmail(string email, string token)
 **Pasta:** `Api/Services/SystemResourcesServices/`
 
 Estrutura similar aos UsersServices:
+
 - `CreateSystemResource.cs`
 - `GetAllSystemResources.cs`
 - `GetSystemResourceById.cs`
@@ -343,6 +365,7 @@ Estrutura similar aos UsersServices:
 - `SearchSystemResources.cs`
 
 **Validações específicas:**
+
 - `name` único (identificador interno)
 - `name` não pode conter espaços
 - Não pode deletar recursos com permissões ativas
@@ -356,15 +379,18 @@ Estrutura similar aos UsersServices:
 **Arquivo:** `Api/Services/SystemLogsServices/CreateSystemLog.cs:1`
 
 **Responsabilidades:**
+
 - Registrar ação no sistema
 - Criar entrada em system_logs
 
 **Método:**
+
 ```csharp
 public async Task ExecuteAsync(int userId, string action)
 ```
 
 **Ações padrão:**
+
 - "Login efetuado"
 - "Usuário criado: {username}"
 - "Usuário atualizado: {username}"
@@ -378,11 +404,13 @@ public async Task ExecuteAsync(int userId, string action)
 **Arquivo:** `Api/Services/SystemLogsServices/GetLogsReport.cs:1`
 
 **Responsabilidades:**
+
 - Buscar logs com filtros
 - Paginação
 - Retornar SystemLogDto[]
 
 **Filtros:**
+
 - userId (opcional)
 - action (contém texto, opcional)
 - startDate (opcional)
@@ -417,6 +445,7 @@ public class User
 ```
 
 **Índices:**
+
 - `Email`: UNIQUE
 - `Username`: UNIQUE
 
@@ -442,6 +471,7 @@ public class SystemResource
 ```
 
 **Índices:**
+
 - `Name`: UNIQUE
 
 ### AccessPermission
@@ -466,6 +496,7 @@ public class AccessPermission
 ```
 
 **Índices:**
+
 - `UserId, SystemResourceId`: UNIQUE (combinação única)
 
 ### SystemLog
@@ -654,6 +685,7 @@ public class SystemLogDto
 **Arquivo:** `Api/Middlewares/RequireAuthorization.cs:1`
 
 **Responsabilidades:**
+
 - Validar presença do header `Authorization`
 - Verificar formato `Bearer {token}`
 - Validar assinatura JWT
@@ -661,6 +693,7 @@ public class SystemLogDto
 - Permitir acesso sem autenticação para rotas `/api/auth/*`
 
 **Implementação:**
+
 ```csharp
 public class RequireAuthorization
 {
@@ -696,6 +729,7 @@ public class RequireAuthorization
 **Arquivo:** `Api/Middlewares/ValidateUserPermissions.cs:1`
 
 **Responsabilidades:**
+
 - Extrair permissões do JWT
 - Mapear endpoint → permissão requerida
 - Validar se usuário tem a permissão
@@ -703,6 +737,7 @@ public class RequireAuthorization
 - Impedir atribuição de permissões root/resources por não-root
 
 **Mapeamento de Permissões:**
+
 ```csharp
 var endpointPermissions = new Dictionary<string, int>
 {
@@ -713,6 +748,7 @@ var endpointPermissions = new Dictionary<string, int>
 ```
 
 **Validação de Atribuição de Permissões:**
+
 ```csharp
 // Usuários não-root não podem atribuir permissões root ou resources
 if (!isRootUser && (POST/PUT /api/users))
@@ -730,11 +766,13 @@ if (!isRootUser && (POST/PUT /api/users))
 **Arquivo:** `Api/Middlewares/ExceptionHandler.cs:1`
 
 **Responsabilidades:**
+
 - Capturar exceções não tratadas
 - Retornar respostas padronizadas
 - Logar erros no console
 
 **Formato de Resposta:**
+
 ```json
 {
   "error": "Mensagem de erro",
@@ -762,6 +800,7 @@ public static JwtSecurityToken? Decode(string token)
 ```
 
 **Configuração:**
+
 - Algoritmo: HS256
 - Chave: `JWT_SECRET_KEY` (variável de ambiente)
 - Expiração: 7 dias
@@ -785,11 +824,13 @@ public static bool Verify(string password, string hash)
 **Arquivo:** `Api/Helpers/DefaultJWTClaims.cs:1`
 
 **Método:**
+
 ```csharp
 public static List<Claim> Generate(User user)
 ```
 
 **Claims gerados:**
+
 - `id`: User.Id
 - `username`: User.Username
 - `email`: User.Email
@@ -800,6 +841,7 @@ public static List<Claim> Generate(User user)
 **Arquivo:** `Api/Helpers/CurrentAuthUser.cs:1`
 
 **Método:**
+
 ```csharp
 public static int GetId(HttpContext context)
 ```
@@ -811,6 +853,7 @@ Extrai o ID do usuário autenticado do token JWT presente no header Authorizatio
 **Arquivo:** `Api/Helpers/EndpointPermissions.cs:1`
 
 **Mapeamento:**
+
 ```csharp
 public static readonly Dictionary<string, int> Map = new()
 {
@@ -827,6 +870,7 @@ public static readonly Dictionary<string, int> Map = new()
 **Arquivo:** `Api/Repositories/IGenericRepository.cs:1`
 
 **Interface:**
+
 ```csharp
 public interface IGenericRepository<T> where T : class
 {
@@ -844,12 +888,14 @@ public interface IGenericRepository<T> where T : class
 **Arquivo:** `Api/Repositories/GenericRepository.cs:1`
 
 **Características:**
+
 - Implementação genérica para todas as entidades
 - Suporta soft delete (verifica propriedade `Active`)
 - Paginação integrada
 - Busca textual (SearchAsync)
 
 **Implementação de Soft Delete:**
+
 ```csharp
 public async Task DeleteAsync(int id)
 {
@@ -881,6 +927,7 @@ public async Task DeleteAsync(int id)
 **Configurações:**
 
 #### 1. Kestrel (Servidor HTTP)
+
 ```csharp
 builder.WebHost.ConfigureKestrel(options =>
 {
@@ -889,12 +936,14 @@ builder.WebHost.ConfigureKestrel(options =>
 ```
 
 #### 2. Banco de Dados
+
 ```csharp
 builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseNpgsql(connectionString));
 ```
 
 #### 3. CORS
+
 ```csharp
 builder.Services.AddCors(options =>
 {
@@ -908,6 +957,7 @@ builder.Services.AddCors(options =>
 ```
 
 #### 4. Registro Automático de Services
+
 ```csharp
 // Registra todos os services automaticamente
 var serviceTypes = Assembly.GetExecutingAssembly()
@@ -922,17 +972,20 @@ foreach (var type in serviceTypes)
 ```
 
 #### 5. Repository Genérico
+
 ```csharp
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 ```
 
 #### 6. Swagger
+
 ```csharp
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 ```
 
 #### 7. Pipeline de Middlewares
+
 ```csharp
 app.UseMiddleware<ExceptionHandler>();
 app.UseCors("AllowWebApp");
@@ -942,6 +995,7 @@ app.MapControllers();
 ```
 
 #### 8. Seed do Banco de Dados
+
 ```csharp
 if (Environment.GetEnvironmentVariable("SEED_DB") == "true")
 {
@@ -980,6 +1034,7 @@ public class ApiDbContext : DbContext
 **Dados criados automaticamente:**
 
 #### 1. Usuário Root
+
 ```csharp
 Username: "root"
 Email: "root@admin.com"
@@ -988,6 +1043,7 @@ FullName: "Root User"
 ```
 
 #### 2. Recursos do Sistema
+
 ```csharp
 1. { Name: "root", ExhibitionName: "Administrador" }
 2. { Name: "users", ExhibitionName: "Usuários" }
@@ -996,9 +1052,11 @@ FullName: "Root User"
 ```
 
 #### 3. Permissões do Root
+
 - Usuário root recebe todas as 4 permissões
 
 #### 4. Usuários de Teste (se RUN_USERS_SEED=true)
+
 ```csharp
 Usernames: alice, bob, carol, dave, eve, frank, grace, heidi, ivan, judy
 Email: {username}@test.com
@@ -1011,6 +1069,7 @@ Sem permissões por padrão
 **Pasta:** `Api/Migrations/`
 
 **Comandos úteis:**
+
 ```bash
 # Criar migration
 dotnet ef migrations add NomeDaMigration
@@ -1036,11 +1095,12 @@ dotnet ef migrations script
 <ItemGroup>
   <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   <PackageReference Include="DotNetEnv" Version="3.1.1" />
-  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4" />
+  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.20" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9" />
   <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   <PackageReference Include="Resend" Version="0.1.7" />
   <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.4" />
+  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
 </ItemGroup>
 ```
 
